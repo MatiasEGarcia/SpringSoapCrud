@@ -28,14 +28,15 @@ public class PersonEndpoint {
 	@Autowired
 	private PersonaService perService;
 	
+	
 	@PayloadRoot(namespace = NAMESPACE_URI ,localPart = "addPersonRequest")
 	@ResponsePayload
 	public AddPersonResponse addPerson(@RequestPayload AddPersonRequest request) {
 		AddPersonResponse response = new AddPersonResponse();
 		Status status= new Status();
 		Person newPerson = new Person();
-		
 		BeanUtils.copyProperties(request.getPersonInfo(), newPerson);
+		newPerson.setDateOfBirth(request.getPersonInfo().getDateOfBirth().toGregorianCalendar().getTime());
 		perService.addPerson(newPerson);
 		status.setStatus("SUCCESS");
 		status.setMessage("Person Added Successfully");
@@ -43,7 +44,7 @@ public class PersonEndpoint {
 		return response;
 	}
 	
-	@PayloadRoot(namespace = "NAMESPACE_URI" , localPart = "getPersonByIdRequest")
+	@PayloadRoot(namespace = NAMESPACE_URI , localPart = "getPersonByIdRequest")
 	@ResponsePayload
 	public GetPersonResponse getPerson(@RequestPayload GetPersonByIdRequest request) {
 		GetPersonResponse response = new GetPersonResponse();
@@ -54,7 +55,7 @@ public class PersonEndpoint {
 		
 	}
 	
-	@PayloadRoot(namespace = "NAMESPACE_URI",localPart = "updatePersonRequest")
+	@PayloadRoot(namespace = NAMESPACE_URI,localPart = "updatePersonRequest")
 	@ResponsePayload
 	public UpdatePersonResponse updatePerson(@RequestPayload UpdatePersonRequest request) {
 		UpdatePersonResponse response = new UpdatePersonResponse();
@@ -62,6 +63,7 @@ public class PersonEndpoint {
 		Status status = new Status();
 		
 		BeanUtils.copyProperties(request.getPersonInfo(), person);
+		person.setDateOfBirth(request.getPersonInfo().getDateOfBirth().toGregorianCalendar().getTime());
 		perService.updatePerson(person);
 		status.setStatus("SUCCESS");
 		status.setMessage("Person Updated Successfully");
@@ -69,7 +71,7 @@ public class PersonEndpoint {
 		return response;
 	}
 	
-	@PayloadRoot(namespace = "NAMESPACE_URI" , localPart = "deletePersonRequest")
+	@PayloadRoot(namespace = NAMESPACE_URI , localPart = "deletePersonRequest")
 	@ResponsePayload
 	public DeletePersonResponse deletePerson(@RequestPayload DeletePersonRequest request) {
 		DeletePersonResponse response = new DeletePersonResponse();
