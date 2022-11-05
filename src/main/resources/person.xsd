@@ -38,7 +38,7 @@
 	 	</xs:complexType>
 	 </xs:element>
 	 
-	 <xs:element name="getPersonRequest">
+	 <xs:element name="getPersonByIdRequest">
 	 	<xs:complexType>
 	 		<xs:sequence>
 	 			<xs:element name="personId" type="xs:long"/>
