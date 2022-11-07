@@ -1,11 +1,15 @@
 package com.example.personSpringSoap.endpoint;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.example.person.AddPersonRequest;
 import org.example.person.AddPersonResponse;
 import org.example.person.DeletePersonRequest;
 import org.example.person.DeletePersonResponse;
+import org.example.person.GetAllPersonResponse;
 import org.example.person.GetPersonByIdRequest;
-import org.example.person.GetPersonResponse;
+import org.example.person.GetPersonByIdResponse;
 import org.example.person.PersonInfo;
 import org.example.person.Status;
 import org.example.person.UpdatePersonRequest;
@@ -46,8 +50,8 @@ public class PersonEndpoint {
 	
 	@PayloadRoot(namespace = NAMESPACE_URI , localPart = "getPersonByIdRequest")
 	@ResponsePayload
-	public GetPersonResponse getPerson(@RequestPayload GetPersonByIdRequest request) {
-		GetPersonResponse response = new GetPersonResponse();
+	public GetPersonByIdResponse getPersonById(@RequestPayload GetPersonByIdRequest request) {
+		GetPersonByIdResponse response = new GetPersonByIdResponse();
 		PersonInfo personInfo = new PersonInfo();
 		BeanUtils.copyProperties(perService.getPersonById(request.getPersonId()), personInfo);
 		response.setPersonInfo(personInfo);
@@ -83,6 +87,22 @@ public class PersonEndpoint {
 		response.setStatus(status);
 		
 		return response;
+	}
+	
+	@PayloadRoot(namespace = NAMESPACE_URI , localPart = "getAllPersonRequest")
+	@ResponsePayload
+	public GetAllPersonResponse getAllPerson() {
+		GetAllPersonResponse response = new GetAllPersonResponse();
+		List<PersonInfo> personInfoList = new ArrayList<>();
+		List<Person> personList = (List<Person>) perService.getall();
+		for(int i=0; i<personList.size();i++) {
+			PersonInfo perInfo = new PersonInfo();
+			BeanUtils.copyProperties(personList.get(i),perInfo);
+			personInfoList.add(perInfo);
+		}
+		response.getPersonInfo().addAll(personInfoList); //I first retrieve the list inside peopleInfo and then add
+		return response;
+		
 	}
 	
 	
