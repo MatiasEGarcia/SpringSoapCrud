@@ -35,7 +35,7 @@ public class PersonEndpoint {
 	
 	@PayloadRoot(namespace = NAMESPACE_URI ,localPart = "addPersonRequest")
 	@ResponsePayload
-	public AddPersonResponse addPerson(@RequestPayload AddPersonRequest request) {
+	public AddPersonResponse addPerson(@RequestPayload AddPersonRequest request) throws Exception {
 		AddPersonResponse response = new AddPersonResponse();
 		Status status= new Status();
 		Person newPerson = new Person();
@@ -50,7 +50,7 @@ public class PersonEndpoint {
 	
 	@PayloadRoot(namespace = NAMESPACE_URI , localPart = "getPersonByIdRequest")
 	@ResponsePayload
-	public GetPersonByIdResponse getPersonById(@RequestPayload GetPersonByIdRequest request) {
+	public GetPersonByIdResponse getPersonById(@RequestPayload GetPersonByIdRequest request) throws Exception {
 		GetPersonByIdResponse response = new GetPersonByIdResponse();
 		PersonInfo personInfo = new PersonInfo();
 		BeanUtils.copyProperties(perService.getPersonById(request.getPersonId()), personInfo);
@@ -61,7 +61,7 @@ public class PersonEndpoint {
 	
 	@PayloadRoot(namespace = NAMESPACE_URI,localPart = "updatePersonRequest")
 	@ResponsePayload
-	public UpdatePersonResponse updatePerson(@RequestPayload UpdatePersonRequest request) {
+	public UpdatePersonResponse updatePerson(@RequestPayload UpdatePersonRequest request) throws Exception {
 		UpdatePersonResponse response = new UpdatePersonResponse();
 		Person person = new Person();
 		Status status = new Status();
@@ -77,7 +77,7 @@ public class PersonEndpoint {
 	
 	@PayloadRoot(namespace = NAMESPACE_URI , localPart = "deletePersonRequest")
 	@ResponsePayload
-	public DeletePersonResponse deletePerson(@RequestPayload DeletePersonRequest request) {
+	public DeletePersonResponse deletePerson(@RequestPayload DeletePersonRequest request) throws Exception {
 		DeletePersonResponse response = new DeletePersonResponse();
 		Status status = new Status();
 		
@@ -91,7 +91,7 @@ public class PersonEndpoint {
 	
 	@PayloadRoot(namespace = NAMESPACE_URI , localPart = "getAllPersonRequest")
 	@ResponsePayload
-	public GetAllPersonResponse getAllPerson() {
+	public GetAllPersonResponse getAllPerson() throws Exception {
 		GetAllPersonResponse response = new GetAllPersonResponse();
 		List<PersonInfo> personInfoList = new ArrayList<>();
 		List<Person> personList = (List<Person>) perService.getall();
